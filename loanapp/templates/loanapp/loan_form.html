@@ -1,0 +1,63 @@
+<!-- loanapp/templates/loanapp/loan_form.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kipanga Utabiri wa Hali ya Mkopo</title>
+    <link rel="stylesheet" href="{% static 'loanapp/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Utabiri wa Hali ya Mkopo</h2>
+    <form method="POST" class="p-4 shadow-sm rounded bg-light">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Mapato ya Mwombaji</label>
+                <input type="number" name="ApplicantIncome" step="0.01" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Mapato ya Mwombaji Mwenza</label>
+                <input type="number" name="CoapplicantIncome" step="0.01" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Kiasi cha Mkopo</label>
+                <input type="number" name="LoanAmount" step="0.01" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Jinsia (Mwanaume=1, Mwanamke=0)</label>
+                <input type="number" name="Gender_Male" min="0" max="1" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Ameoa/Ameolewa (Ndiyo=1, Hapana=0)</label>
+                <input type="number" name="Married_Yes" min="0" max="1" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Wategemezi = 1</label>
+                <input type="number" name="Dependents_1" min="0" max="1" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Mjasiriamali Binafsi (Ndiyo=1, Hapana=0)</label>
+                <input type="number" name="Self_Employed_Yes" min="0" max="1" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Eneo la Mali (Semiurban=1, Nyingine=0)</label>
+                <input type="number" name="Property_Area_Semiurban" min="0" max="1" class="form-control" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Tabiri</button>
+    </form>
+
+    {% if result %}
+        <div class="mt-4 alert 
+            {% if result == 'Active' %}alert-success
+            {% elif result == 'Inactive' %}alert-danger
+            {% else %}alert-warning{% endif %}">
+            <h4>Hali: {{ result }}</h4>
+            <p>{{ reasoning }}</p>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
